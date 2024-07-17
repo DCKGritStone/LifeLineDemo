@@ -1,8 +1,7 @@
 ﻿namespace LifeLineDemo.Domain.DTO
 {
-    public class UserDto
+    public class UserNoIdDto
     {
-        public long Id { get; set; }
         public long PhoneNumber { get; set; }
         public string? Email { get; set; }
         public long RoleId { get; set; }

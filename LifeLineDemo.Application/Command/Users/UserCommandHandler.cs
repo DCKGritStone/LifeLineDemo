@@ -27,7 +27,6 @@ namespace LifeLineDemo.Application.Command.Users
                 case Operation.Create:
                     user = new User
                     {
-                        UserName = request.UserNoIdDto.UserName,
                         PhoneNumber = request.UserNoIdDto.PhoneNumber,
                         Email = request.UserNoIdDto.Email,
                         RoleId = request.UserNoIdDto.RoleId
@@ -40,7 +39,6 @@ namespace LifeLineDemo.Application.Command.Users
                     var updateUser = new User
                     {
                         Id = request.UserDto.Id,
-                        UserName = request.UserDto.UserName,
                         PhoneNumber = request.UserDto.PhoneNumber,
                         Email = request.UserDto.Email,
                         RoleId = request.UserDto.RoleId
