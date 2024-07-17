@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LifeLineDemo.Application.Command.Hospital
+namespace LifeLineDemo.Application.Command.hospital
 {
     public class HospitalCommand:IRequest<HospitalDto>
     {

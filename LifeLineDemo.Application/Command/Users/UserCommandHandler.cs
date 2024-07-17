@@ -27,6 +27,7 @@ namespace LifeLineDemo.Application.Command.Users
                 case Operation.Create:
                     user = new User
                     {
+                        
                         PhoneNumber = request.UserNoIdDto.PhoneNumber,
                         Email = request.UserNoIdDto.Email,
                         RoleId = request.UserNoIdDto.RoleId
