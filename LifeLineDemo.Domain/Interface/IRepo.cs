@@ -19,5 +19,9 @@ namespace LifeLineDemo.Domain.Interface
         Task<Credentials> CreateCredentials(Credentials credentials);
         Task<long> UpdateCredentials(long id, Credentials credentials);
         Task<long> DeleteCredentials(long id);
+
+        Task<Hospital> CreateHospital(Hospital hospital);
+        Task<long> UpdateHospital(long id, Hospital hospital);
+        Task<long> DeleteHospital(long id);
     }
 }
