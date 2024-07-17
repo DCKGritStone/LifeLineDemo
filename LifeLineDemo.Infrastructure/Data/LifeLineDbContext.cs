@@ -13,5 +13,6 @@ namespace LifeLineDemo.Infrastructure.Data
         public DbSet<UserRoles> UserRoles { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Credentials> Credentials { get; set; }
+        public DbSet<Hospital> Hospitals { get; set; }
     }
 }

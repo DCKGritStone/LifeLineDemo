@@ -1,6 +1,6 @@
 ﻿namespace LifeLineDemo.Domain.DTO
 {
-    internal class HospitalNoIdDto
+    public class HospitalNoIdDto
     {
         public string? Name { get; set; }
         public string? Address { get; set; }
