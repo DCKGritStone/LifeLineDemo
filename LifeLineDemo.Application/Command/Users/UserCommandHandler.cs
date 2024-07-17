@@ -27,9 +27,19 @@ namespace LifeLineDemo.Application.Command.Users
                 case Operation.Create:
                     user = new User
                     {
-                        FirstName=request.UserNoIdDto
+                        FirstName=request.UserNoIdDto.FirstName,
+                        LastName=request.UserNoIdDto.LastName,
+                        AddressLine1 = request.UserNoIdDto.AddressLine1,
+                        AddressLine2 = request.UserNoIdDto.AddressLine2,
+                        Pincode = request.UserNoIdDto.Pincode,
+                        Gender = request.UserNoIdDto.Gender,
+                        BloodGroup = request.UserNoIdDto.BloodGroup,
+                        Dob = request.UserNoIdDto.Dob,
                         PhoneNumber = request.UserNoIdDto.PhoneNumber,
                         Email = request.UserNoIdDto.Email,
+                        IsAvailable = request.UserNoIdDto.IsAvailable,
+                        LicenseNumber = request.UserNoIdDto.LicenseNumber,
+                        LicenseExpiryDate = request.UserNoIdDto.LicenseExpiryDate,
                         RoleId = request.UserNoIdDto.RoleId
                     };
                     var createUsers = await repo.CreateUser(user);
@@ -40,8 +50,19 @@ namespace LifeLineDemo.Application.Command.Users
                     var updateUser = new User
                     {
                         Id = request.UserDto.Id,
+                        FirstName = request.UserDto.FirstName,
+                        LastName = request.UserDto.LastName,
+                        AddressLine1 = request.UserDto.AddressLine1,
+                        AddressLine2 = request.UserDto.AddressLine2,
+                        Pincode = request.UserDto.Pincode,
+                        Gender = request.UserDto.Gender,
+                        BloodGroup = request.UserDto.BloodGroup,
+                        Dob = request.UserDto.Dob,
                         PhoneNumber = request.UserDto.PhoneNumber,
                         Email = request.UserDto.Email,
+                        IsAvailable = request.UserDto.IsAvailable,
+                        LicenseNumber = request.UserDto.LicenseNumber,
+                        LicenseExpiryDate = request.UserDto.LicenseExpiryDate,
                         RoleId = request.UserDto.RoleId
                     };
                     await repo.UpdateUser(request.UserDto.Id, updateUser);
