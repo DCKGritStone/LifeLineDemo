@@ -5,6 +5,6 @@ namespace LifeLineDemo.Domain.Interface.Queries
     public interface IGetHospital
     {
         IList<HospitalDto> GetHospitalList();
-        HospitalDto GetHospitalById(int id);
+        HospitalDto GetHospitalById(long id);
     }
 }

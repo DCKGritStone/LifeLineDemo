@@ -1,4 +1,5 @@
-﻿using LifeLineDemo.Domain.Interface;
+﻿using LifeLineDemo.Domain.Entities;
+using LifeLineDemo.Domain.Interface;
 using LifeLineDemo.Domain.Interface.Queries;
 using LifeLineDemo.Infrastructure.Data;
 using LifeLineDemo.Infrastructure.Queries;
@@ -14,11 +15,14 @@ namespace LifeLineDemo.Infrastructure
         {
             services.AddDbContext<LifeLineDbContext>(option => option.UseSqlServer(configuration.GetConnectionString("LifeLineConnection")));
 
-            services.AddScoped<IRepo, BaseRepo>();
+            services.AddScoped<IRepo<User, long>, BaseRepo<User, long>>();
+            services.AddScoped<IRepo<UserRoles, long>, BaseRepo<UserRoles, long>>();
+            services.AddScoped<IRepo<Role, long>, BaseRepo<Role, long>>();
+            services.AddScoped<IRepo<Hospital, long>, BaseRepo<Hospital, long>>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IGetRole, GetRole>();
             services.AddScoped<IGetUser, GetUser>();
             services.AddScoped<IGetUserRoles, GetUserRole>();
-            services.AddScoped<IGetCredentials, GetCredentials>();
             return services;
         }
     }

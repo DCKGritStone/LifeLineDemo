@@ -9,15 +9,14 @@ namespace LifeLineDemo.Application.Command.Users
 {
     public class UserCommandHandler : IRequestHandler<UserCommand, UserDto>
     {
-        private readonly IRepo repo;
+        private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
 
-        public UserCommandHandler(IRepo repo, IMapper mapper)
+        public UserCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            this.repo = repo;
+            this.unitOfWork = unitOfWork;
             this.mapper = mapper;
         }
-
         public async Task<UserDto> Handle(UserCommand request, CancellationToken cancellationToken)
         {
             User user;
@@ -27,8 +26,8 @@ namespace LifeLineDemo.Application.Command.Users
                 case Operation.Create:
                     user = new User
                     {
-                        FirstName=request.UserNoIdDto.FirstName,
-                        LastName=request.UserNoIdDto.LastName,
+                        FirstName = request.UserNoIdDto.FirstName,
+                        LastName = request.UserNoIdDto.LastName,
                         AddressLine1 = request.UserNoIdDto.AddressLine1,
                         AddressLine2 = request.UserNoIdDto.AddressLine2,
                         Pincode = request.UserNoIdDto.Pincode,
@@ -42,7 +41,7 @@ namespace LifeLineDemo.Application.Command.Users
                         LicenseExpiryDate = request.UserNoIdDto.LicenseExpiryDate,
                         RoleId = request.UserNoIdDto.RoleId
                     };
-                    var createUsers = await repo.CreateUser(user);
+                    var createUsers = await unitOfWork._userRepo.Create(user);
                     return mapper.Map<UserDto>(createUsers);
 
                 case Operation.Update:
@@ -65,12 +64,12 @@ namespace LifeLineDemo.Application.Command.Users
                         LicenseExpiryDate = request.UserDto.LicenseExpiryDate,
                         RoleId = request.UserDto.RoleId
                     };
-                    await repo.UpdateUser(request.UserDto.Id, updateUser);
+                    await unitOfWork._userRepo.Update(request.UserDto.Id, updateUser);
                     return mapper.Map<UserDto>(updateUser);
 
                 case Operation.Delete:
 
-                    await repo.DeleteUser(request.UserDto.Id);
+                    await unitOfWork._userRepo.Delete(request.UserDto.Id);
 
                     return null;
 

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LifeLineDemo.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("API/[controller]")]
     [ApiController]
     public class UserRolesController : ControllerBase
     {
@@ -57,7 +57,7 @@ namespace LifeLineDemo.API.Controllers
             var res = await mediator.Send(command);
             return Ok(res);
         }
-        [HttpPut("{id}")]
+        [HttpDelete("{id}")]
 
         public async Task<IActionResult> Update(long id)
         {

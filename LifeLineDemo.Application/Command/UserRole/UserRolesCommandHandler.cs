@@ -9,12 +9,12 @@ namespace LifeLineDemo.Application.Command.UserRole
 {
     public class UserRolesCommandHandler : IRequestHandler<UserRolesCommand, UserRolesDto>
     {
-        private readonly IRepo repo;
+        private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
 
-        public UserRolesCommandHandler(IRepo repo, IMapper mapper)
+        public UserRolesCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            this.repo = repo;
+            this.unitOfWork = unitOfWork;
             this.mapper = mapper;
         }
 
@@ -30,7 +30,7 @@ namespace LifeLineDemo.Application.Command.UserRole
                         UserId = request.UserRolesNoIdDto.UserId,
                         RoleId = request.UserRolesNoIdDto.RoleId
                     };
-                    var createUserRoles = await repo.CreateUserRoles(userRoles);
+                    var createUserRoles = await unitOfWork._userRoleRepo.Create(userRoles);
                     return mapper.Map<UserRolesDto>(createUserRoles);
 
                 case Operation.Update:
@@ -41,12 +41,12 @@ namespace LifeLineDemo.Application.Command.UserRole
                         UserId = request.UserRolesDto.UserId,
                         RoleId = request.UserRolesDto.RoleId
                     };
-                    await repo.UpdateUserRoles(request.UserRolesDto.Id, updateUserRoles);
+                    await unitOfWork._userRoleRepo.Update(request.UserRolesDto.Id, updateUserRoles);
                     return mapper.Map<UserRolesDto>(updateUserRoles);
 
                 case Operation.Delete:
 
-                    await repo.DeleteUserRoles(request.UserRolesDto.Id);
+                    await unitOfWork._userRoleRepo.Delete(request.UserRolesDto.Id);
 
                     return null;
 

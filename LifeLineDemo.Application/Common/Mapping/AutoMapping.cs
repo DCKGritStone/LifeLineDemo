@@ -14,8 +14,8 @@ namespace LifeLineDemo.Application.Comman.Mapping
             CreateMap<Role, RoleNoIdDto>().ReverseMap();
             CreateMap<UserRoles, UserRolesNoIdDto>().ReverseMap();
             CreateMap<User, UserNoIdDto>().ReverseMap();
-            CreateMap<Credentials, CredDto>().ReverseMap();
-            CreateMap<Credentials, CredNoIdDto>().ReverseMap();
+            CreateMap<Hospital, HospitalDto>().ReverseMap();
+            CreateMap<Hospital, HospitalNoIdDto>().ReverseMap();
         }
     }
 }

@@ -1,8 +1,6 @@
-﻿using LifeLineDemo.Domain.Entities.Audit;
-
-namespace LifeLineDemo.Domain.Entities
+﻿namespace LifeLineDemo.Domain.Entities
 {
-    public class Credentials : FullAuditedEntity<long>
+    public class Credentials
     {
         public string? UserName { get; set; }
         public string? Password { get; set; }

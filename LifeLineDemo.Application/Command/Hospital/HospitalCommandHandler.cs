@@ -4,25 +4,20 @@ using LifeLineDemo.Domain.Entities;
 using LifeLineDemo.Domain.Enums;
 using LifeLineDemo.Domain.Interface;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LifeLineDemo.Application.Command.hospital
 {
     public class HospitalCommandHandler : IRequestHandler<HospitalCommand, HospitalDto>
     {
-        private readonly IRepo repo;
+        private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
 
-        public HospitalCommandHandler(IRepo repo,IMapper mapper) 
+        public HospitalCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            this.repo = repo;
+            this.unitOfWork = unitOfWork;
             this.mapper = mapper;
         }
-        public  async Task<HospitalDto> Handle(HospitalCommand request, CancellationToken cancellationToken)
+        public async Task<HospitalDto> Handle(HospitalCommand request, CancellationToken cancellationToken)
         {
             Hospital hospital;
             switch (request.Operation)
@@ -31,30 +26,30 @@ namespace LifeLineDemo.Application.Command.hospital
                     {
                         hospital = new Hospital
                         {
-                            Name=request.HospitalNoIdDto.Name,
-                            Address=request.HospitalNoIdDto.Address,
-                            Email=request.HospitalNoIdDto.Email,
-                            PhoneNumber=request.HospitalNoIdDto.PhoneNumber,
-                            City=request.HospitalNoIdDto.City,
-                            ZipCode=request.HospitalNoIdDto.ZipCode,
-                            State=request.HospitalNoIdDto.State,
-                            AmbulanceCount=request.HospitalNoIdDto.AmbulanceCount,
-                            EmergencyServicesAvailable=request.HospitalNoIdDto.EmergencyServicesAvailable,
-                            Specializations=request.HospitalNoIdDto.Specializations,
-                            Rating=request.HospitalNoIdDto.Rating,
-                            Longitude=request.HospitalNoIdDto.Longitude,
-                            Latitude=request.HospitalNoIdDto.Latitude
-                            
-                            
-                        }; 
-                        var newhospital=await repo.CreateHospital( hospital );
-                        return mapper.Map<HospitalDto>( newhospital );
+                            Name = request.HospitalNoIdDto.Name,
+                            Address = request.HospitalNoIdDto.Address,
+                            Email = request.HospitalNoIdDto.Email,
+                            PhoneNumber = request.HospitalNoIdDto.PhoneNumber,
+                            City = request.HospitalNoIdDto.City,
+                            ZipCode = request.HospitalNoIdDto.ZipCode,
+                            State = request.HospitalNoIdDto.State,
+                            AmbulanceCount = request.HospitalNoIdDto.AmbulanceCount,
+                            EmergencyServicesAvailable = request.HospitalNoIdDto.EmergencyServicesAvailable,
+                            Specializations = request.HospitalNoIdDto.Specializations,
+                            Rating = request.HospitalNoIdDto.Rating,
+                            Longitude = request.HospitalNoIdDto.Longitude,
+                            Latitude = request.HospitalNoIdDto.Latitude
+
+
+                        };
+                        var newhospital = await unitOfWork._hospitalRepo.Create(hospital);
+                        return mapper.Map<HospitalDto>(newhospital);
                     }
                 case Operation.Update:
                     {
                         var updatehospital = new Hospital
                         {
-                            Id=request.HospitalDto.Id,
+                            Id = request.HospitalDto.Id,
                             Name = request.HospitalDto.Name,
                             Address = request.HospitalDto.Address,
                             Email = request.HospitalDto.Email,
@@ -69,15 +64,15 @@ namespace LifeLineDemo.Application.Command.hospital
                             Longitude = request.HospitalDto.Longitude,
                             Latitude = request.HospitalDto.Latitude
                         };
-                        var updatedhospital=await repo.UpdateHospital(request.HospitalDto.Id, updatehospital);
+                        var updatedhospital = await unitOfWork._hospitalRepo.Update(request.HospitalDto.Id, updatehospital);
                         return mapper.Map<HospitalDto>(updatedhospital);
                     }
-                    case Operation.Delete: 
-                    { 
-                        var deleteid=await repo.DeleteHospital(request.HospitalDto.Id);
+                case Operation.Delete:
+                    {
+                        var deleteid = await unitOfWork._hospitalRepo.Delete(request.HospitalDto.Id);
                         return null;
                     }
-                    default:throw new ArgumentOutOfRangeException();
+                default: throw new ArgumentOutOfRangeException();
 
             }
 

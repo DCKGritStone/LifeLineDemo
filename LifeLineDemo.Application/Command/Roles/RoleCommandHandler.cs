@@ -12,12 +12,12 @@ namespace LifeLineDemo.Application.Command.Roles
     public class RoleCommandHandler : IRequestHandler<RoleCommand, RoleDto>
 
     {
-        private readonly IRepo repo;
+        private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
 
-        public RoleCommandHandler(IRepo repo, IMapper mapper)
+        public RoleCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            this.repo = repo;
+            this.unitOfWork = unitOfWork;
             this.mapper = mapper;
         }
 
@@ -32,7 +32,7 @@ namespace LifeLineDemo.Application.Command.Roles
                     {
                         RoleName = request.RoleNoIdDto.RoleName
                     };
-                    var createRole = await repo.CreateRole(role);
+                    var createRole = await unitOfWork._roleRepo.Create(role);
                     return mapper.Map<RoleDto>(createRole);
 
                 case Operation.Update:
@@ -42,12 +42,12 @@ namespace LifeLineDemo.Application.Command.Roles
                         Id = request.RoleDto.Id,
                         RoleName = request.RoleDto.RoleName
                     };
-                    await repo.UpdateRole(request.RoleDto.Id, updateRole);
+                    await unitOfWork._roleRepo.Update(request.RoleDto.Id, updateRole);
                     return mapper.Map<RoleDto>(updateRole);
 
                 case Operation.Delete:
 
-                    await repo.DeleteRole(request.RoleDto.Id);
+                    await unitOfWork._roleRepo.Delete(request.RoleDto.Id);
 
                     return null;
 

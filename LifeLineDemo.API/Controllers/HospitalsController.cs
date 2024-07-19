@@ -1,4 +1,4 @@
-﻿using LifeLineDemo.Application.Command.Roles;
+﻿using LifeLineDemo.Application.Command.hospital;
 using LifeLineDemo.Domain.DTO;
 using LifeLineDemo.Domain.Enums;
 using LifeLineDemo.Domain.Interface.Queries;
@@ -9,36 +9,36 @@ namespace LifeLineDemo.API.Controllers
 {
     [Route("API/[controller]")]
     [ApiController]
-    public class RolesController : ControllerBase
+    public class HospitalsController : ControllerBase
     {
-        private readonly IGetRole getRole;
+        private readonly IGetHospital getHospital;
         private readonly IMediator mediator;
 
-        public RolesController(IGetRole getRole, IMediator mediator)
+        public HospitalsController(IGetHospital getHospital, IMediator mediator)
         {
-            this.getRole = getRole;
+            this.getHospital = getHospital;
             this.mediator = mediator;
         }
 
         [HttpGet]
         public IActionResult GetAll()
         {
-            var role = getRole.GetAllRoles();
-            return Ok(role);
+            var hospital = getHospital.GetHospitalList();
+            return Ok(hospital);
         }
 
         [HttpGet("Id")]
         public IActionResult GetById(long id)
         {
-            var role = getRole.GetRoleById(id);
-            return Ok(role);
+            var hospital = getHospital.GetHospitalById(id);
+            return Ok(hospital);
         }
 
         [HttpPost]
 
-        public async Task<IActionResult> Create(RoleNoIdDto role)
+        public async Task<IActionResult> Create(HospitalNoIdDto hospital)
         {
-            var command = new RoleCommand(Operation.Create, role);
+            var command = new HospitalCommand(Operation.Create, hospital);
 
             var res = await mediator.Send(command);
             return Ok(res);
@@ -46,13 +46,13 @@ namespace LifeLineDemo.API.Controllers
 
         [HttpPut("{id}")]
 
-        public async Task<IActionResult> Update(long id, RoleDto role)
+        public async Task<IActionResult> Update(long id, HospitalDto hospital)
         {
-            if (id != role.Id)
+            if (id != hospital.Id)
             {
                 return BadRequest();
             }
-            var command = new RoleCommand(Operation.Update, role);
+            var command = new HospitalCommand(Operation.Update, hospital);
 
             var res = await mediator.Send(command);
             return Ok(res);
@@ -62,12 +62,11 @@ namespace LifeLineDemo.API.Controllers
         public async Task<IActionResult> Update(long id)
         {
 
-            var role = new RoleDto { Id = id };
-            var command = new RoleCommand(Operation.Delete, role);
+            var hospital = new HospitalDto { Id = id };
+            var command = new HospitalCommand(Operation.Delete, hospital);
 
             var res = await mediator.Send(command);
-            return Ok(new { message = "Credentials deleted successfully" });
+            return Ok(new { message = "User-Roles deleted successfully" });
         }
-
     }
 }
